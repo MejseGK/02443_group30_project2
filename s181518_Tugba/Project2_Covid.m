@@ -1,16 +1,15 @@
-clear; 
-clc; 
-close all;
+%% Project 2 (COVID-19)
+clear; clc; close all;
 
-% PArameters of the virus
-beta = 0.5;       % Infection rate (days^-1)
-gamma = 0.25;     % Recovery rate (days^-1)
+% Parameters for COVID-19 
+R0 = 2.5;           % Basic reproduction number
+gamma = 0.10;       % Recovery rate (days^-1) -> 10 days infectious window
+beta = 0.25;        % Infection rate (days^-1)
 
 % Simulation parameters
-t_max = 100;       % Simulation time window (days)
-t_max = 120;       % Simulation time window (days)
+t_max = 150;        % Extended to 150 days to see the full curve with gamma = 0.10
 num_stoch_runs = 5; % Number of stochastic realizations
-N_sizes = [100, 10000, 1000000];           
+N_sizes = [100, 10000, 1000000];         
 
 figure('Position', [50, 100, 1500, 450]);
 
@@ -113,17 +112,9 @@ for p = 1:length(N_sizes)
     h_ode_I = plot(time_steps, I_det, 'r-', 'LineWidth', 2.5);
     h_ode_S = plot(time_steps, S_det, 'b--', 'LineWidth', 2.0);
     
-    % GRAPH FORMATTING
-    title(['Population Size $N = ', num2str(N), '$'], ...
-          'Interpreter', 'latex');
-    
-    xlabel('Time (days)', ...
-           'Interpreter', 'latex');
-    
-    ylabel('Proportion of Population', ...
-           'Interpreter', 'latex');
 
-    title(['Population Size N = ', num2str(N)]);
+   % GRAPH FORMATTING
+    title(['COVID-19 Simulation: Population Size N = ', num2str(N)]);
     xlabel('Time (days)');
     ylabel('Proportion of Population');
     ylim([0 1]);
@@ -133,7 +124,6 @@ for p = 1:length(N_sizes)
     if p == 1
         legend([h_stoch, h_ode_I, h_ode_S], ...
             {'Stochastic (Infected)', 'ODE (Infected)', 'ODE (Susceptible)'}, ...
-            'Interpreter', 'latex', ...
             'Location', 'best');
     end
 end
